@@ -1,6 +1,6 @@
 import React from 'react';
 import fetch from './fetch';
-import { Impart } from '.';
+import Impart from '.';
 
 class MyAppComponent extends React.Component {
   doSomething() {
@@ -19,7 +19,7 @@ class MyAppComponent extends React.Component {
 export default (
   <Impart.RootContainer
     Component={MyAppComponent}
-    route={() => (fetch('http://url/to/resource'))}
+    route={({ articleId }) => (fetch(`http://url/to/resource/${articleId}`))}
     renderLoading={() => (<div>Loading...</div>)}
     renderFailure={(error) => (<div>Error: {error.message}</div>)}
   />

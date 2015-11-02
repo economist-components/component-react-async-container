@@ -1,5 +1,12 @@
 # component-react-async-container
 
+> A Container that fulfills its Component with a Promise. In the style of Relay.
+**AsyncContainer** is a React component that, given a `Component` and a `route`, attempts to fulfill the data required in order to render an instance of Component.
+
+## Goals
+
+- [x] Similar interface to [Relay.RootContainer](https://facebook.github.io/relay/docs/guides-root-container.html) to help with the transition to it later on.
+
 ## Usage
 ```js
 import React from 'react';

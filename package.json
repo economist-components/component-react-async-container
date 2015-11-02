@@ -26,7 +26,7 @@
     ]
   },
   "babel": {
-    "stage": 1,
+    "stage": 0,
     "loose": "all",
     "compact": false
   },
@@ -126,8 +126,7 @@
     "watch": "parallelshell 'npm run doc:watch' 'npm run prepublish:watch' 'npm run serve'"
   },
   "dependencies": {
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react": "^0.14.1"
   },
   "devDependencies": {
     "@economist/component-devpack": "^3.4.3",
@@ -155,12 +154,12 @@
     "parallelshell": "^2.0.0",
     "pre-commit": "^1.0.10",
     "react-addons-test-utils": "^0.14.0",
-    "react-dom": "^0.14.0",
+    "react-dom": "^0.14.1",
     "watchify": "^3.4.0"
   },
   "peerDependencies": {
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react": "^0.14.1",
+    "react-dom": "^0.14.1"
   },
   "pre-commit": [
     "lint"

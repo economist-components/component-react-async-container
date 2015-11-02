@@ -1,21 +1,22 @@
-import React, { PropTypes } from 'react'; // eslint-disable-line
+import React, { PropTypes } from 'react';
 
-export class RootContainer extends React.Component {
+class RootContainer extends React.Component {
   static propTypes = {
-    Component: PropTypes.func,
-    route: PropTypes.func,
+    Component: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]).isRequired,
+    route: PropTypes.func.isRequired,
     renderFetched: PropTypes.func,
     renderFailure: PropTypes.func,
     renderLoading: PropTypes.func,
   }
 
   state = {
-    data: {},
+    data: null,
     readyState: 'loading',
   }
 
   componentDidMount() {
-    return Promise.resolve(this.props.route()).then((response) => {
+    const { route = () => {}, ...remainingProps } = this.props;
+    return Promise.resolve(route(remainingProps)).then((response) => {
       this.setState({ data: response, readyState: 'fetched' });
     })
     .catch((error) => {
@@ -25,18 +26,33 @@ export class RootContainer extends React.Component {
 
   render() {
     const { data, readyState } = this.state;
-    const { Component } = this.props;
-    const render = {
-      loading: this.props.renderLoading,
-      fetched: this.props.renderFetched || () => (<Component {...data}/>),
-      failure: this.props.renderFailure,
-    };
-    if (typeof render[readyState] === 'function') {
-      return render[readyState](data);
+    const {
+      Component,
+      renderFailure,
+      renderFetched,
+      renderLoading,
+      ...remainingProps,
+    } = this.props;
+    /* eslint-disable no-else-return, no-lonely-if */
+    if (readyState === 'failure') {
+      if (renderFailure) {
+        return renderFailure(data);
+      }
+    } else if (data) {
+      if (renderFetched) {
+        return renderFetched(data);
+      } else {
+        return <Component {...data} {...remainingProps} />;
+      }
+    } else {
+      if (renderLoading) {
+        return renderLoading();
+      }
     }
+    /* eslint-enable no-else-return, no-lonely-if */
 
-    return <div />; // eslint-disable-line
+    return undefined; // eslint-disable-line
   }
 }
 
-export const Impart = { RootContainer };
+export default { RootContainer };
