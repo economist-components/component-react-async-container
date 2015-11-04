@@ -12,7 +12,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import fetch from 'node-fetch';
-import { Impart } from '@economist/component-react-async-container';
+import Impart from '@economist/component-react-async-container';
 
 class MyAppComponent extends React.Component {
   render() {
@@ -25,7 +25,7 @@ class MyAppComponent extends React.Component {
 ReactDOM.render(
   <Impart.RootContainer
     Component={MyAppComponent}
-    route={() => (fetch('http://url/to/resource'))}
+    route={({ articleId }) => (fetch(`http://url/to/resource/${articleId}`))}
     renderLoading={() => (<div>Loading...</div>)}
     renderFailure={(error) => (<div>Error: {error.message}</div>)}
   />
@@ -40,7 +40,7 @@ Impart.RootContainer is a React component that, given a Component and a route, a
 ReactDOM.render(
   <Impart.RootContainer
     Component={MyAppComponent}
-    route={() => (fetch('http://url/to/resource'))}
+    route={({ articleId }) => (fetch(`http://url/to/resource/${articleId}`))}
   />
 , node);
 ```
@@ -53,7 +53,7 @@ This snippet configures Impart.RootContainer to render the "Loading..." text whe
 ReactDOM.render(
   <Impart.RootContainer
     Component={MyAppComponent}
-    route={() => (fetch('http://url/to/resource'))}
+    route={({ articleId }) => (fetch(`http://url/to/resource/${articleId}`))}
     renderLoading={() => (<div>Loading...</div>)}
   />
 , node);
@@ -67,7 +67,7 @@ If an error occurs that prevents Impart.RootContainer from fetching the data req
 ReactDOM.render(
   <Impart.RootContainer
     Component={MyAppComponent}
-    route={() => (fetch('http://url/to/resource'))}
+    route={({ articleId }) => (fetch(`http://url/to/resource/${articleId}`))}
     renderLoading={() => (<div>Loading...</div>)}
     renderFailure={(error) => (<div>Error: {error.message}</div>)}
   />
@@ -84,7 +84,7 @@ When all data necessary to render becomes available, Impart.RootContainer will r
 ReactDOM.render(
   <Impart.RootContainer
     Component={MyAppComponent}
-    route={() => (fetch('http://url/to/resource'))}
+    route={({ articleId }) => (fetch(`http://url/to/resource/${articleId}`))}
     renderLoading={() => (<div>Loading...</div>)}
     renderFailure={(error) => (<div>Error: {error.message}</div>)}
     renderFetched={() => (data) {
