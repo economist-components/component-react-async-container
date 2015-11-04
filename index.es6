@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import StaticContainer from 'react-static-container';
 
 class RootContainer extends React.Component {
   static propTypes = {
@@ -33,25 +34,35 @@ class RootContainer extends React.Component {
       renderLoading,
       ...remainingProps,
     } = this.props;
-    /* eslint-disable no-else-return, no-lonely-if */
+    let shouldUpdate = true;
+    let children = null;
     if (readyState === 'failure') {
       if (renderFailure) {
-        return renderFailure(data);
+        children = renderFailure(data);
       }
-    } else if (data) {
+    } else if (data && readyState === 'fetched') {
       if (renderFetched) {
-        return renderFetched(data);
+        children = renderFetched(data);
       } else {
-        return <Component {...data} {...remainingProps} />;
+        children = <Component {...data} {...remainingProps} />;
       }
     } else {
-      if (renderLoading) {
-        return renderLoading();
+      /* eslint-disable no-lonely-if */
+      if (renderLoading && readyState === 'loading') {
+        children = renderLoading();
       }
+      /* eslint-enable no-lonely-if */
     }
-    /* eslint-enable no-else-return, no-lonely-if */
 
-    return undefined; // eslint-disable-line
+    if (!children) {
+      shouldUpdate = false;
+    }
+
+    return (
+      <StaticContainer shouldUpdate={shouldUpdate}>
+        {children}
+      </StaticContainer>
+    );
   }
 }
 

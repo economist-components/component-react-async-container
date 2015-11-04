@@ -122,11 +122,12 @@
     "pretest": "npm run lint",
     "provision": "devpack-configure ./package.json",
     "serve": "browser-sync start --server --files '*.{html,js}'",
-    "test": "karma start",
+    "test": "./node_modules/.bin/mocha --recursive --compilers es6:babel/register ./test/index.es6",
     "watch": "parallelshell 'npm run doc:watch' 'npm run prepublish:watch' 'npm run serve'"
   },
   "dependencies": {
-    "react": "^0.14.1"
+    "react": "^0.14.2",
+    "react-static-container": "^1.0.0"
   },
   "devDependencies": {
     "@economist/component-devpack": "^3.4.3",
@@ -145,6 +146,7 @@
     "eslint-config-strict-react": "^2.0.0",
     "eslint-plugin-filenames": "^0.1.2",
     "eslint-plugin-react": "^3.3.1",
+    "jsdom": "^7.0.2",
     "karma-chai": "^0.1.0",
     "karma-mocha": "^0.2.0",
     "karma-sauce-launcher": "^0.2.14",
@@ -153,13 +155,14 @@
     "npm-watch": "0.0.1",
     "parallelshell": "^2.0.0",
     "pre-commit": "^1.0.10",
-    "react-addons-test-utils": "^0.14.0",
-    "react-dom": "^0.14.1",
+    "react-addons-test-utils": "^0.14.2",
+    "react-dom": "^0.14.2",
+    "react-shallow-testutils": "^0.6.0",
     "watchify": "^3.4.0"
   },
   "peerDependencies": {
-    "react": "^0.14.1",
-    "react-dom": "^0.14.1"
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2"
   },
   "pre-commit": [
     "lint"
