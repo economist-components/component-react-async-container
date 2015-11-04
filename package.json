@@ -122,7 +122,7 @@
     "pretest": "npm run lint",
     "provision": "devpack-configure ./package.json",
     "serve": "browser-sync start --server --files '*.{html,js}'",
-    "test": "./node_modules/.bin/mocha --recursive --compilers es6:babel/register ./test/index.es6",
+    "test": "karma start",
     "watch": "parallelshell 'npm run doc:watch' 'npm run prepublish:watch' 'npm run serve'"
   },
   "dependencies": {
