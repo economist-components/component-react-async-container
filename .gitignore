@@ -1,0 +1,12 @@
+node_modules/
+*.log
+*.js
+bundle.css
+*.html
+*~
+Thumbs.db
+_site/
+*.log.*
+*.pid
+*.seed
+
