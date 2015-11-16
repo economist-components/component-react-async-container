@@ -4,6 +4,15 @@ import cache from './cache';
 import fetch from './fetch';
 import Impart from '.';
 
+cache('/article/1').set({
+  style: {
+    color: 'white',
+    backgroundColor: 'black',
+  },
+  title: 'cached title',
+  text: 'cached text',
+});
+
 class MyAppComponent extends React.Component {
   doSomething() {
     console.log('You clicked'); // eslint-disable-line
@@ -20,6 +29,7 @@ class MyAppComponent extends React.Component {
 
 export default (
   <Impart.RootContainer
+    articleId={1}
     Component={MyAppComponent}
     cache={({ articleId }) => (cache(`/article/${articleId}`))}
     route={({ articleId }) => (fetch(`http://url/to/resource/${articleId}`))}

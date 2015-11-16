@@ -32,8 +32,10 @@ class RootContainer extends React.Component {
   loadCache() {
     const { cache, ...remainingProps } = this.props;
     if (cache) {
-      const cacheData = cache(remainingProps).get() || {};
-      this.setState({ data: cacheData, readyState: 'cached' });
+      const cacheData = cache(remainingProps).get();
+      if (cacheData) {
+        this.setState({ data: cacheData, readyState: 'cached' });
+      }
     }
   }
 
@@ -61,7 +63,7 @@ class RootContainer extends React.Component {
       if (renderFailure) {
         children = renderFailure(data);
       }
-    } else if (data && readyState === 'fetched') {
+    } else if (data && (readyState === 'fetched' || readyState === 'cached')) {
       if (renderFetched) {
         children = renderFetched(data);
       } else {
