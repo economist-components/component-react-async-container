@@ -1,4 +1,3 @@
-
 /* global serverCache */
 const hydrateCache = typeof serverCache !== 'undefined' ? serverCache : {};
 export const cacheStorage = { ...hydrateCache };
