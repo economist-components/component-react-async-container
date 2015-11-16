@@ -4,6 +4,7 @@ import StaticContainer from 'react-static-container';
 class RootContainer extends React.Component {
   static propTypes = {
     Component: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]).isRequired,
+    cache: PropTypes.func,
     route: PropTypes.func.isRequired,
     renderFetched: PropTypes.func,
     renderFailure: PropTypes.func,
@@ -15,21 +16,32 @@ class RootContainer extends React.Component {
     readyState: 'loading',
   }
 
+  componentWillMount() {
+    this.loadCache();
+  }
+
   componentDidMount() {
     this.loadData(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ data: {}, readyState: 'loading' });
+    this.setState({ data: null, readyState: 'loading' });
     this.loadData(nextProps);
+  }
+
+  loadCache() {
+    const { cache, ...remainingProps } = this.props;
+    if (cache) {
+      const cacheData = cache(remainingProps).get() || {};
+      this.setState({ data: cacheData, readyState: 'cached' });
+    }
   }
 
   loadData(props) {
     const { route = () => {}, ...remainingProps } = props;
-    return Promise.resolve(route(remainingProps)).then((response) => {
+    Promise.resolve(route(remainingProps)).then((response) => {
       this.setState({ data: response, readyState: 'fetched' });
-    })
-    .catch((error) => {
+    }).catch((error) => {
       this.setState({ data: error, readyState: 'failure' });
     });
   }
