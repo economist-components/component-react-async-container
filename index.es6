@@ -16,7 +16,16 @@ class RootContainer extends React.Component {
   }
 
   componentDidMount() {
-    const { route = () => {}, ...remainingProps } = this.props;
+    this.loadData(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ data: {}, readyState: 'loading' });
+    this.loadData(nextProps);
+  }
+
+  loadData(props) {
+    const { route = () => {}, ...remainingProps } = props;
     return Promise.resolve(route(remainingProps)).then((response) => {
       this.setState({ data: response, readyState: 'fetched' });
     })
