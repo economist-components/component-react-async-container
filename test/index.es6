@@ -1,3 +1,4 @@
+/* eslint-disable react/no-multi-comp, react/display-name */
 import React from 'react';
 import chai from 'chai';
 import Impart from '../.';
