@@ -1,6 +1,6 @@
 /* global serverCache */
 const hydrateCache = typeof serverCache !== 'undefined' ? serverCache : {};
-export const cacheStorage = { ...hydrateCache };
+export let cacheStorage = { ...hydrateCache };
 
 export default function cache(key) {
   return {
@@ -9,6 +9,26 @@ export default function cache(key) {
     },
     set: function set(value) {
       cacheStorage[key] = value;
+      return this;
+    },
+  };
+}
+
+export function configureCache({ ttl = 30000 } = {}) {
+  return {
+    intervalId: null,
+    cache,
+    start() {
+      function resetCacheStorage() {
+        cacheStorage = {};
+      }
+
+      this.intervalId = setInterval(resetCacheStorage, parseInt(ttl, 10));
+      return this;
+    },
+    stop() {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
       return this;
     },
   };
