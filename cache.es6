@@ -14,7 +14,7 @@ export default function cache(key) {
   };
 }
 
-export function configureCache({ ttl = 30000 }) {
+export function configureCache({ ttl = 30000 } = {}) {
   return {
     intervalId: null,
     cache,
@@ -23,7 +23,7 @@ export function configureCache({ ttl = 30000 }) {
         cacheStorage = {};
       }
 
-      this.intervalId = setInterval(resetCacheStorage, ttl);
+      this.intervalId = setInterval(resetCacheStorage, parseInt(ttl, 10));
       return this;
     },
     stop() {
