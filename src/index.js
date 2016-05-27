@@ -1,4 +1,4 @@
-/* eslint-disable id-blacklist, no-empty-function */
+/* eslint-disable id-blacklist, no-empty-function, no-use-before-define */
 import React, { PropTypes } from 'react';
 import StaticContainer from 'react-static-container';
 
