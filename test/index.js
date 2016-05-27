@@ -1,17 +1,18 @@
 /* eslint-disable react/no-multi-comp, react/display-name */
+import 'babel-polyfill';
 import React from 'react';
 import chai from 'chai';
-import Impart from '../.';
+import Impart from '../src';
 import StaticContainer from 'react-static-container';
 const emptyFunction = Function.prototype;
 chai.should();
 
-class MyAppComponent extends React.Component {
-  render() {
-    return (
-      <div className="myAppComponent" {...this.props}>MyAppComponent</div>
-    );
-  }
+function MyAppComponent({
+  ...rest,
+}) {
+  return (
+    <div className="myAppComponent" {...rest}>MyAppComponent</div>
+  );
 }
 
 describe('Async Container', () => {
@@ -19,7 +20,7 @@ describe('Async Container', () => {
     React.isValidElement(
       <Impart.RootContainer
         Component={MyAppComponent}
-        route={() => (Promise.resolve({}))}
+        route={() => (Promise.resolve({}))} //eslint-disable-line
       />
     ).should.equal(true);
   });
