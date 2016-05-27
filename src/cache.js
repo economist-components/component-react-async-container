@@ -1,5 +1,6 @@
 /* global serverCache */
-const hydrateCache = typeof serverCache !== 'undefined' ? serverCache : {};
+const hydrateCache = typeof serverCache === 'undefined' ? {} : serverCache;
+const defaultTtl = 30000;
 export let cacheStorage = { ...hydrateCache };
 
 export default function cache(key) {
@@ -14,7 +15,9 @@ export default function cache(key) {
   };
 }
 
-export function configureCache({ ttl = 30000 } = {}) {
+export function configureCache({
+  ttl = defaultTtl,
+} = {}) {
   return {
     intervalId: null,
     cache,

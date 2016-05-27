@@ -1,16 +1,8 @@
+/* eslint-disable id-blacklist, no-empty-function, no-use-before-define */
 import React, { PropTypes } from 'react';
 import StaticContainer from 'react-static-container';
 
 class RootContainer extends React.Component {
-  static propTypes = {
-    Component: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]).isRequired,
-    cache: PropTypes.func,
-    route: PropTypes.func.isRequired,
-    renderFetched: PropTypes.func,
-    renderFailure: PropTypes.func,
-    renderLoading: PropTypes.func,
-  }
-
   state = {
     data: null,
     readyState: 'loading',
@@ -90,3 +82,18 @@ class RootContainer extends React.Component {
 }
 
 export default { RootContainer };
+
+if (process.env.NODE_ENV !== 'production') {
+  RootContainer.propTypes = {
+    Component: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.func,
+      PropTypes.node,
+    ]).isRequired,
+    cache: PropTypes.func,
+    route: PropTypes.func.isRequired,
+    renderFetched: PropTypes.func,
+    renderFailure: PropTypes.func,
+    renderLoading: PropTypes.func,
+  };
+}
